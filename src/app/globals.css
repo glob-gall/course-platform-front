@@ -44,6 +44,9 @@
   --sidebar-border: oklch(0.923 0.003 48.717);
   --sidebar-ring: oklch(0.709 0.01 56.259);
 }
+button {
+  cursor: pointer;
+}
 
 .dark {
   --background: oklch(0.147 0.004 49.25);
