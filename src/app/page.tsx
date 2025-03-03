@@ -1,8 +1,7 @@
+import { LoginPage } from "@/pages/Login";
 
 export default function Home() {
   return (
-   <div>
-
-    </div>
+    <LoginPage/>
   );
 }
