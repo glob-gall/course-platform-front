@@ -57,7 +57,7 @@ export function ForgotPasswordForm() {
       fields={renderFields}
       onSubmit={handleSubmit}
       submitSection={
-        <Link href="/">
+        <Link href="/login">
           <Button type="button" variant='ghost'>
             Voltar para o login
           </Button>
