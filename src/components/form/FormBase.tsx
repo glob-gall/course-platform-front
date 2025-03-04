@@ -11,6 +11,7 @@ import { Form } from "@/components/ui/form"
 
 interface FormProps<T extends z.ZodTypeAny> {
   title?: string;
+  buttonText?:string;
   subtitle?: string;
   schema: T;
   defaultValues: z.infer<T>;
@@ -20,7 +21,7 @@ interface FormProps<T extends z.ZodTypeAny> {
 
 }
 
-export function FormBase<T extends z.ZodTypeAny>({ defaultValues, schema, fields, onSubmit,submitSection,subtitle,title }: FormProps<T>) {
+export function FormBase<T extends z.ZodTypeAny>({ defaultValues, schema, fields, onSubmit,submitSection,subtitle,title,buttonText }: FormProps<T>) {
   const form = useForm<z.infer<T>>({
     resolver: zodResolver(schema),
     defaultValues,
@@ -52,7 +53,7 @@ export function FormBase<T extends z.ZodTypeAny>({ defaultValues, schema, fields
           </div>
 
           <Button type="submit">
-            Submit
+            {buttonText ?? 'Enviar'}
           </Button>
         </div>
       </form>

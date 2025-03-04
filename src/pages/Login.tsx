@@ -1,8 +1,8 @@
 import { LoginForm } from "@/components/form/LoginForm";
-import ModeToggle from "@/components/ModeToggle";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
+import Link from "next/link";
 
 export function LoginPage() {
   return (
@@ -15,13 +15,15 @@ export function LoginPage() {
         <div className="md:w-60  flex flex-col items-center mt-8">
 
           <Separator/>
-          <Button
-            className="mt-4" 
-            type="button" 
-            variant='ghost'
-          >
-            Esqueci minha senha
-          </Button>
+          <Link href="forgot-password">
+            <Button
+              className="mt-4" 
+              type="button" 
+              variant='ghost'
+            >
+              Esqueci minha senha
+            </Button>
+          </Link>
         </div>
       </div>
       
@@ -32,10 +34,6 @@ export function LoginPage() {
           alt=""
           fill
         />
-      </div>
-      
-      <div className="absolute top-4 right-4">
-        <ModeToggle/>
       </div>
     </div>
   )
