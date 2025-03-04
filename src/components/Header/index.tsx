@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/menubar"
 import ThemeMenuItem from "./ThemeMenuItem"
 import { LogOut, User } from "lucide-react"
-
+  
 
 export default function Header () {
 
@@ -23,8 +23,6 @@ export default function Header () {
 
         <ThemeMenuItem />
       </MenubarMenu>
-      
-      
-    </Menubar>
+    </Menubar>  
   )
 }

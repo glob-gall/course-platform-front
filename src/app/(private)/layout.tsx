@@ -1,7 +1,9 @@
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { cookies } from "next/headers";
+
 import { AppSidebar } from "@/components/SideBar";
 import Header from "@/components/Header";
+
 
 export default async function RootLayout({
   children,
@@ -15,6 +17,7 @@ export default async function RootLayout({
     <SidebarProvider defaultOpen={defaultOpen}>
 
       <AppSidebar />
+      <SidebarTrigger className="absolute top-5 left-4 md:hidden"/>
       <main className="w-full">
         {children}
       </main>

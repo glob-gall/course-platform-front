@@ -18,42 +18,42 @@ import { Separator } from "../ui/separator"
 const items = [
   {
     title: "Dashboard",
-    url: "#",
+    url: "/",
     icon: Home,
   },
   {
     title: "Usários",
-    url: "#",
+    url: "users",
     icon: UserRound,
   },
   {
     title: "Cursos",
-    url: "#",
+    url: "/courses",
     icon: GraduationCap,
   },
   {
     title: "Módulos",
-    url: "#",
+    url: "/modules",
     icon: FolderOpen,
   },
   {
     title: "Aulas",
-    url: "#",
+    url: "lectures",
     icon: Apple,
   },
   {
     title: "Quizzes",
-    url: "#",
+    url: "quizzes",
     icon: SquareCheckBig,
   },
   {
     title: "Questões",
-    url: "#",
+    url: "questions",
     icon: NotepadText,
   },
   {
     title: "Settings",
-    url: "#",
+    url: "settings",
     icon: Settings,
   },
 ]
