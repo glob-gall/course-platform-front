@@ -1,14 +1,14 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
-import { MoreHorizontal } from "lucide-react"
+import { MoreHorizontal, PenLine, Trash } from "lucide-react"
  
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
+  // DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
@@ -63,8 +63,7 @@ export const columnsTeste: ColumnDef<Course>[] = [
   {
     id: "actions",
     header: () => <div className="text-right">Ações</div>,
-    cell: ({ row }) => {
-      const payment = row.original
+    cell: () => {
  
       return (
         <div className="flex">
@@ -79,9 +78,14 @@ export const columnsTeste: ColumnDef<Course>[] = [
               <DropdownMenuContent align="end">
                 {/* <DropdownMenuLabel>Ações</DropdownMenuLabel> */}
 
-                <DropdownMenuItem>Editar</DropdownMenuItem>
+                <DropdownMenuItem>
+                <PenLine /> Editar
+                </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Deletar</DropdownMenuItem>
+                
+                <DropdownMenuItem className=" flex items-center"> 
+                  <Trash className="text-destructive" /> Deletar
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
