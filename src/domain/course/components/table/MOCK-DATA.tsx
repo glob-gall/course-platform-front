@@ -1,4 +1,4 @@
-import { Course } from "@/domain/entities/course";
+import { Course } from "../../entity/course"
 
 export function generateCourseMockData(qnt:number = 10): Course[]{
   const courses:Course[] = []

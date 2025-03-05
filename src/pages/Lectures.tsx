@@ -2,28 +2,28 @@ import { Container } from "@/components/Container";
 import { Title } from "@/components/Title";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { CourseTable } from "@/domain/course/components/table/course-table";
+import { LectureTable } from "@/domain/lecture/components/table/lecture-table";
 import { Plus } from "lucide-react";
 import Link from "next/link";
 
-export function CoursesPage() {
+export function LecturesPage() {
   return (
     <Container>  
         <div className="p-4 w-full">
           <div className="flex justify-between mb-4">
             <Title>
-              Cursos
+              Aulas
             </Title>
 
             <div>
-              <Link href="/courses/create">
+              <Link href="/lectures/create">
                 <Button><Plus/> Novo</Button>
               </Link>
             </div>
           </div>
           <Separator/>
           <div>
-            <CourseTable />
+            <LectureTable />
           </div>
         </div>
       </Container>

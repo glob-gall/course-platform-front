@@ -13,13 +13,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { ArrowUpDown } from "lucide-react"
-import { Course } from "@/domain/entities/course"
+import { Section } from "../../entity/section"
  
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 
 
-export const columnsTeste: ColumnDef<Course>[] = [
+export const sectionColumns: ColumnDef<Section>[] = [
   {
     accessorKey: "id",
     header: "ID",
@@ -36,16 +36,6 @@ export const columnsTeste: ColumnDef<Course>[] = [
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       )
-    },
-  },
-  {
-    accessorKey: "slug",
-    header: () => <div className="text-right">Slug</div>,
-    cell: ({ row }) => {
-      const slug = row.getValue("slug")
-
- 
-      return <div className="text-right font-medium">{`${slug}`}</div>
     },
   },
   {

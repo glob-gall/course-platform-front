@@ -11,8 +11,8 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { FormBase } from "./FormBase"
-import { Button } from "../ui/button"
+import { FormBase } from "@/components/form/FormBase"
+import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { zodResolver } from "@hookform/resolvers/zod"
 
@@ -20,12 +20,12 @@ const schema = z.object({
   email: z.string().email({
     message: "Email invalido.",
   }),
-  passsword: z.string().nonempty("Campo Obrigatório"),
 })
 
 
 const renderFields = ({ form }: { form: UseFormReturn<z.infer<typeof schema>> }) => (
   <>
+   
     <FormField
       control={form.control}
       name="email"
@@ -39,30 +39,16 @@ const renderFields = ({ form }: { form: UseFormReturn<z.infer<typeof schema>> })
         </FormItem>
       )}
     />
-    <FormField
-      control={form.control}
-      name="passsword"
-      render={({ field }) => (
-        <FormItem>
-          <FormLabel>Senha</FormLabel>
-          <FormControl>
-            <Input placeholder="******" {...field} type="password" />
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-      )}
-    />
   </>
 );
 
-export function LoginForm() {
+export function ForgotPasswordForm() {
   const handleSubmit = (values: z.infer<typeof schema>) => {
     console.log("Form Submitted:", values);
   };
 
   const defaultValues = {
-    email:'',
-    passsword:'',
+    email:''
   }
 
   const form = useForm({
@@ -74,20 +60,21 @@ export function LoginForm() {
     <div className="w-full md:px-8">
       <FormBase
         form={form}
-        title="Login"
-        subtitle="Seja bem-vindo"
+        title="Recuperar senha"
+        subtitle="Será enviado uma senha para seu email com o código para criar um senha nova"
         schema={schema}
         defaultValues={defaultValues}
         fields={renderFields}
         onSubmit={handleSubmit}
         submitSection={
-          <Link href="/register">
-            <Button type="button" variant='outline'>
-              Cadastre-se
+          <Link href="/login">
+            <Button type="button" variant='ghost'>
+              Voltar para o login
             </Button>
           </Link>
         }
       />
     </div>
+
   )
 }

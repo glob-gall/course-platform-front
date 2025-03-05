@@ -11,10 +11,10 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { FormBase } from "./FormBase"
-import { Button } from "../ui/button"
 import Link from "next/link"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { FormBase } from "@/components/form/FormBase"
+import { Button } from "@/components/ui/button"
 
 const schema = z.object({
   name: z.string().nonempty("Campo Obrigatório"),

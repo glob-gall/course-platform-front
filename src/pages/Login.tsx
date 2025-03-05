@@ -1,6 +1,6 @@
-import { LoginForm } from "@/components/form/LoginForm";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { LoginForm } from "@/domain/auth/form/login-form";
 import Image from "next/image";
 import Link from "next/link";
 

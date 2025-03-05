@@ -33,7 +33,7 @@ const items = [
   },
   {
     title: "Módulos",
-    url: "/modules",
+    url: "/sections",
     icon: FolderOpen,
   },
   {

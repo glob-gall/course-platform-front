@@ -1,5 +1,5 @@
-import { ForgotPasswordForm } from "@/components/form/ForgotPasswordForm";
 import { Separator } from "@/components/ui/separator";
+import { ForgotPasswordForm } from "@/domain/auth/form/forgot-password-form";
 import Image from "next/image";
 
 export function ForgotPasswordPage() {

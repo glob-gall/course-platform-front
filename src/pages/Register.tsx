@@ -1,5 +1,5 @@
-import { RegisterForm } from "@/components/form/RegisterForm";
 import { Separator } from "@/components/ui/separator";
+import { RegisterForm } from "@/domain/auth/form/register-form";
 import Image from "next/image";
 
 export function RegisterPage() {
