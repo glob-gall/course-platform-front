@@ -1,9 +1,10 @@
 import { Container } from "@/components/Container";
-import DemoPage from "@/components/table/course/CourseTable";
+import CourseTable from "@/components/table/course/CourseTable";
 import { Title } from "@/components/Title";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Plus } from "lucide-react";
+import Link from "next/link";
 
 export function CoursesPage() {
   return (
@@ -15,12 +16,14 @@ export function CoursesPage() {
             </Title>
 
             <div>
-              <Button><Plus/> Novo</Button>
+              <Link href="/courses/create">
+                <Button><Plus/> Novo</Button>
+              </Link>
             </div>
           </div>
           <Separator/>
           <div>
-            <DemoPage />
+            <CourseTable />
           </div>
         </div>
       </Container>

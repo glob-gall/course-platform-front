@@ -76,7 +76,6 @@ export const columnsTeste: ColumnDef<Course>[] = [
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                {/* <DropdownMenuLabel>Ações</DropdownMenuLabel> */}
 
                 <DropdownMenuItem>
                 <PenLine /> Editar

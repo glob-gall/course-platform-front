@@ -1,6 +1,6 @@
 "use client"
 
-import { UseFormReturn } from "react-hook-form"
+import { useForm, UseFormReturn } from "react-hook-form"
 import { z } from "zod"
 
 import {
@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input"
 import { FormBase } from "./FormBase"
 import { Button } from "../ui/button"
 import Link from "next/link"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 const schema = z.object({
   email: z.string().email({
@@ -45,24 +46,35 @@ export function ForgotPasswordForm() {
   const handleSubmit = (values: z.infer<typeof schema>) => {
     console.log("Form Submitted:", values);
   };
+
+  const defaultValues = {
+    email:''
+  }
+
+  const form = useForm({
+    resolver: zodResolver(schema),
+    defaultValues,
+  });
   
   return (
-    <FormBase
-      title="Recuperar senha"
-      subtitle="Será enviado uma senha para seu email com o código para criar um senha nova"
-      schema={schema}
-      defaultValues={{
-        email:'',
-      }}
-      fields={renderFields}
-      onSubmit={handleSubmit}
-      submitSection={
-        <Link href="/login">
-          <Button type="button" variant='ghost'>
-            Voltar para o login
-          </Button>
-        </Link>
-      }
-    />
+    <div className="w-full md:px-8">
+      <FormBase
+        form={form}
+        title="Recuperar senha"
+        subtitle="Será enviado uma senha para seu email com o código para criar um senha nova"
+        schema={schema}
+        defaultValues={defaultValues}
+        fields={renderFields}
+        onSubmit={handleSubmit}
+        submitSection={
+          <Link href="/login">
+            <Button type="button" variant='ghost'>
+              Voltar para o login
+            </Button>
+          </Link>
+        }
+      />
+    </div>
+
   )
 }

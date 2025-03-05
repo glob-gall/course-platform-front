@@ -1,6 +1,6 @@
 "use client"
 
-import { UseFormReturn } from "react-hook-form"
+import { useForm, UseFormReturn } from "react-hook-form"
 import { z } from "zod"
 
 import {
@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input"
 import { FormBase } from "./FormBase"
 import { Button } from "../ui/button"
 import Link from "next/link"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 const schema = z.object({
   email: z.string().email({
@@ -58,25 +59,35 @@ export function LoginForm() {
   const handleSubmit = (values: z.infer<typeof schema>) => {
     console.log("Form Submitted:", values);
   };
+
+  const defaultValues = {
+    email:'',
+    passsword:'',
+  }
+
+  const form = useForm({
+    resolver: zodResolver(schema),
+    defaultValues,
+  });
   
   return (
-    <FormBase
-      title="Login"
-      subtitle="Seja bem-vindo"
-      schema={schema}
-      defaultValues={{
-        email:'',
-        passsword:'',
-      }}
-      fields={renderFields}
-      onSubmit={handleSubmit}
-      submitSection={
-        <Link href="/register">
-          <Button type="button" variant='outline'>
-            Cadastre-se
-          </Button>
-        </Link>
-      }
-    />
+    <div className="w-full md:px-8">
+      <FormBase
+        form={form}
+        title="Login"
+        subtitle="Seja bem-vindo"
+        schema={schema}
+        defaultValues={defaultValues}
+        fields={renderFields}
+        onSubmit={handleSubmit}
+        submitSection={
+          <Link href="/register">
+            <Button type="button" variant='outline'>
+              Cadastre-se
+            </Button>
+          </Link>
+        }
+      />
+    </div>
   )
 }

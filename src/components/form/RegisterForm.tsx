@@ -1,6 +1,6 @@
 "use client"
 
-import { UseFormReturn } from "react-hook-form"
+import { useForm, UseFormReturn } from "react-hook-form"
 import { z } from "zod"
 
 import {
@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input"
 import { FormBase } from "./FormBase"
 import { Button } from "../ui/button"
 import Link from "next/link"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 const schema = z.object({
   name: z.string().nonempty("Campo Obrigatório"),
@@ -72,26 +73,37 @@ export function RegisterForm() {
   const handleSubmit = (values: z.infer<typeof schema>) => {
     console.log("Form Submitted:", values);
   };
+
+  const defaultValues = {
+    email:'',
+    passsword:'',
+    name:''
+  }
+
+  const form = useForm({
+    resolver: zodResolver(schema),
+    defaultValues,
+  });
   
   return (
-    <FormBase
-      title="Cadastre-se"
-      subtitle="Crie uma conta em segundos!"
-      schema={schema}
-      defaultValues={{
-        email:'',
-        passsword:'',
-        name:''
-      }}
-      fields={renderFields}
-      onSubmit={handleSubmit}
-      submitSection={
-        <Link href="/login">
-          <Button type="button" variant='ghost'>
-            Voltar para o login
-          </Button>
-        </Link>
-      }
-    />
+    <div className="w-full md:px-8">
+      <FormBase
+        form={form}
+        title="Cadastre-se"
+        subtitle="Crie uma conta em segundos!"
+        schema={schema}
+        defaultValues={defaultValues}
+        fields={renderFields}
+        onSubmit={handleSubmit}
+        submitSection={
+          <Link href="/login">
+            <Button type="button" variant='ghost'>
+              Voltar para o login
+            </Button>
+          </Link>
+        }
+      />
+    </div>
+
   )
 }
