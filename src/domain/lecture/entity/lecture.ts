@@ -1,5 +1,9 @@
 
-type LectureType = 'AUDIO' | 'VIDEO' | 'OTHER'
+export enum LectureType {
+  Audio='AUDIO',
+  Video='VIDEO',
+  Other='OTHER',
+}
 
 export type Lecture = {
   id: string,

@@ -1,4 +1,4 @@
-import { Lecture } from "../../entity/lecture"
+import { Lecture,LectureType } from "../../entity/lecture"
 
 export function generateLectureMockData(qnt:number = 10): Lecture[]{
   const Lectures:Lecture[] = []
@@ -7,7 +7,7 @@ export function generateLectureMockData(qnt:number = 10): Lecture[]{
     Lectures.push({
       id:`${i}`,
       title:`title ${i}`,
-      type:'OTHER',
+      type:LectureType.Other,
       resourceUrl:'http://localhost:3333/10523d.jpg',
       description:`description ${i}`,
       createdAt:`${i}.20.2025`,
