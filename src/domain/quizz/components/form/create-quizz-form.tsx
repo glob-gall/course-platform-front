@@ -54,7 +54,7 @@ const renderFields = ({ form }: { form: UseFormReturn<z.infer<typeof schema>> })
   </>
 );
 
-export function CreateSectionForm() {
+export function CreateQuizzForm() {
 
   const handleSubmit = (values: z.infer<typeof schema>) => {
     console.log("Form Submitted:", values);

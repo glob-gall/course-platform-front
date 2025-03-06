@@ -38,22 +38,22 @@ const items = [
   },
   {
     title: "Aulas",
-    url: "lectures",
+    url: "/lectures",
     icon: Apple,
   },
   {
     title: "Quizzes",
-    url: "quizzes",
+    url: "/quizzes",
     icon: SquareCheckBig,
   },
   {
     title: "Questões",
-    url: "questions",
+    url: "/questions",
     icon: NotepadText,
   },
   {
     title: "Settings",
-    url: "settings",
+    url: "/settings",
     icon: Settings,
   },
 ]

@@ -1,7 +1,7 @@
 "use client"
 
-import { useForm, UseFormReturn } from "react-hook-form"
-import { z } from "zod"
+import { useForm, UseFormReturn } from "react-hook-form";
+import { z } from "zod";
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import {
@@ -10,16 +10,24 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { FormBase } from "@/components/form/FormBase";
 import { Textarea } from "@/components/ui/textarea";
+
+// const answerSchema = z.object({
+//   isCorrect: z.boolean(),
+//   audioURL: z.string().url().optional(),
+//   resourceURL: z.string().url().optional(),
+//   description: z.string(),
+// })
 
 const schema = z.object({
   title: z.string().min(8, 'O titulo não pode ter menos de 8 letras'),
   description: z.string(),
+  type: z.enum(['VIDEO','AUDIO','TEXT']),
+  resourceUrl: z.string(),
 })
-
 
 const renderFields = ({ form }: { form: UseFormReturn<z.infer<typeof schema>> }) => (
   <>
@@ -54,15 +62,16 @@ const renderFields = ({ form }: { form: UseFormReturn<z.infer<typeof schema>> })
   </>
 );
 
-export function CreateSectionForm() {
+export function CreateQuestionForm() {
 
   const handleSubmit = (values: z.infer<typeof schema>) => {
     console.log("Form Submitted:", values);
   };
-  const defaultValues = {
+  const defaultValues: z.infer<typeof schema> = {
+    description:'',
+    resourceUrl:'',
     title:'',
-    description: '',
-    slug:''
+    type:'TEXT'
   }
 
   const form = useForm({
