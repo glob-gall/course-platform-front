@@ -18,10 +18,10 @@ interface FormProps<T extends z.ZodTypeAny> {
   fields: (props: { form: ReturnType<typeof useForm<z.infer<T>>> }) => ReactNode; // Pass a function to render fields
   onSubmit: (values: z.infer<T>) => void;
   submitSection?: ReactNode
-
+  id?:string
 }
 
-export function FormBase<T extends z.ZodTypeAny>({ form, fields, onSubmit,submitSection,subtitle,title,buttonText }: FormProps<T>) {
+export function FormBase<T extends z.ZodTypeAny>({ id,form, fields, onSubmit,submitSection,subtitle,title,buttonText }: FormProps<T>) {
 
 
   function onSubmitWrapper(data: z.infer<T>) {
@@ -31,7 +31,7 @@ export function FormBase<T extends z.ZodTypeAny>({ form, fields, onSubmit,submit
   return (
     <div className="w-full">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmitWrapper)} className=" space-y-6">
+        <form id={id} onSubmit={form.handleSubmit(onSubmitWrapper)} className=" space-y-6">
 
         <div className="flex flex-col items-center gap-2 text-center">
           {title && (
@@ -50,7 +50,7 @@ export function FormBase<T extends z.ZodTypeAny>({ form, fields, onSubmit,submit
               {submitSection}
             </div>
 
-            <Button type="submit">
+            <Button type="submit" form={id}>
               {buttonText ?? 'Enviar'}
             </Button>
           </div>

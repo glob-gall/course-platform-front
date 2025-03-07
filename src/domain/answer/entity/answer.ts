@@ -1,8 +1,8 @@
 
 export type Answer = {
   id: string;
-  audioURL: string | null | undefined;
-  videoURL: string | null | undefined;
+  type: 'TEXT' | 'VIDEO' | 'AUDIO';
+  resourceURL: string | null | undefined;
   description: string;
   isCorrect: boolean;
 }
