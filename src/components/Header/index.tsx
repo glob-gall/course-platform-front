@@ -1,3 +1,5 @@
+"use client"
+
 import {
   Menubar,
   MenubarContent,
@@ -7,16 +9,17 @@ import {
 } from "@/components/ui/menubar"
 import ThemeMenuItem from "./ThemeMenuItem"
 import { LogOut, User } from "lucide-react"
+import { deleteSession } from "@/actions/delete-session"
   
 
 export default function Header () {
-
+  
   return (
     <Menubar>
       <MenubarMenu>
         <MenubarTrigger><User /></MenubarTrigger>
         <MenubarContent>
-          <MenubarItem>
+          <MenubarItem onClick={deleteSession}>
           <LogOut/> Sair
           </MenubarItem>
         </MenubarContent>

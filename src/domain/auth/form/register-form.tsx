@@ -15,13 +15,15 @@ import Link from "next/link"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FormBase } from "@/components/form/FormBase"
 import { Button } from "@/components/ui/button"
+import { useMutation } from "@tanstack/react-query"
+import { makeUserService } from "@/services/user.service"
 
 const schema = z.object({
   name: z.string().nonempty("Campo Obrigatório"),
   email: z.string().email({
     message: "Email invalido.",
   }),
-  passsword: z.string().nonempty("Campo Obrigatório"),
+  password: z.string().nonempty("Campo Obrigatório"),
 })
 
 
@@ -55,7 +57,7 @@ const renderFields = ({ form }: { form: UseFormReturn<z.infer<typeof schema>> })
     />
     <FormField
       control={form.control}
-      name="passsword"
+      name="password"
       render={({ field }) => (
         <FormItem>
           <FormLabel>Senha</FormLabel>
@@ -70,13 +72,28 @@ const renderFields = ({ form }: { form: UseFormReturn<z.infer<typeof schema>> })
 );
 
 export function RegisterForm() {
+  
+  
+  const createUserMutation = useMutation({
+    mutationFn: async (values: z.infer<typeof schema>) => {
+      const userService = makeUserService()
+      await userService.create(values)
+    }
+  })
   const handleSubmit = (values: z.infer<typeof schema>) => {
-    console.log("Form Submitted:", values);
+    console.log("Form Submitted:", {values});
+
+    createUserMutation.mutate({
+      email: values.email,
+      name: values.name,
+      password: values.password,
+    })
+    
   };
 
   const defaultValues = {
     email:'',
-    passsword:'',
+    password:'',
     name:''
   }
 

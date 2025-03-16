@@ -15,6 +15,11 @@ import Link from "next/link"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FormBase } from "@/components/form/FormBase"
 import { Button } from "@/components/ui/button"
+import { useMutation } from "@tanstack/react-query"
+import { authService } from "@/services/auth.service"
+import { useRouter } from "next/navigation"
+import { createErrorToast } from "@/lib/create-error-toast"
+import { createSuccessToast } from "@/lib/create-success-toast"
 
 const schema = z.object({
   email: z.string().email({
@@ -56,8 +61,31 @@ const renderFields = ({ form }: { form: UseFormReturn<z.infer<typeof schema>> })
 );
 
 export function LoginForm() {
+  const router = useRouter()
+
+  const createUserMutation = useMutation({
+    mutationFn: async (values: z.infer<typeof schema>) => {
+      await authService.signiIn({
+        email: values.email,
+        password: values.passsword
+      })
+    },
+    onSuccess:() => {
+      router.push('/')
+      createSuccessToast({
+        title: 'Bem-vindo',
+        description:'Login realizado com sucesso!'
+      })
+    },
+    onError:() =>{
+      createErrorToast({
+        title:"Error creating a user.",
+      })
+    },
+  })
   const handleSubmit = (values: z.infer<typeof schema>) => {
     console.log("Form Submitted:", values);
+    createUserMutation.mutate(values)
   };
 
   const defaultValues = {

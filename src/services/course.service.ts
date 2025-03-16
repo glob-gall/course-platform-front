@@ -1,5 +1,5 @@
 import { left, right } from "@/core/types/either";
-import { HttpSerive } from "./http.service";
+import { HttpService } from "./http.service";
 import { ServiceFilters } from "@/core/services/filters";
 
 interface CreateCourseParams {
@@ -18,7 +18,7 @@ interface FetchManyCourseParams extends ServiceFilters {
 }
 
 export class CourseService {
-  constructor(private http: HttpSerive){}
+  constructor(private http: HttpService){}
 
   async create({description,title,slug}:CreateCourseParams){
     try {

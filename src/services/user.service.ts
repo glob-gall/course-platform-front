@@ -1,5 +1,6 @@
 import { left, right } from "@/core/types/either";
-import { HttpSerive } from "./http.service";
+import { HttpService } from "./http.service";
+import { AxiosHttpService } from "./axios/axios.service";
 
 interface CreateUserParams {
   name: string
@@ -8,14 +9,21 @@ interface CreateUserParams {
 }
 
 export class UserService {
-  constructor(private http: HttpSerive){}
+  constructor(private http: HttpService){}
 
-  async create({email,password, name}:CreateUserParams){
+  async create({email,password, name}:CreateUserParams){    
     try {
       const response = await this.http.post('/user',{ name, email, password })
-      return right(response.data)
+      
+      return right(response)
     } catch (error) {
       return left(error)
     }
   }
+}
+
+export function makeUserService(){
+  const axiosService = new AxiosHttpService()
+  const userService = new UserService(axiosService)
+  return userService
 }

@@ -1,6 +1,6 @@
 // import type { Metadata } from "next";
+import { verifyPublicSession } from "@/actions/verify-public-session";
 import ModeToggle from "@/components/ModeToggle";
-
 
 // export const metadata: Metadata = {
 //   title: "Create Next App",
@@ -12,6 +12,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  await verifyPublicSession()
 
   return (
     <div>

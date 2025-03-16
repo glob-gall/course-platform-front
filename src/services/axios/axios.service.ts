@@ -1,15 +1,17 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
-import { HttpSerive } from "../http.service";
+import { HttpService } from "../http.service";
 
 
 
 
-export default class AxiosHttpService implements HttpSerive {
+export class AxiosHttpService implements HttpService {
   private axiosInstance: AxiosInstance
   constructor(){
     this.axiosInstance = axios.create({
         baseURL: process.env.NEXT_PUBLIC_API_URL,
-        timeout: Number(process.env.NEXT_PUBLIC_API_TIMEOUNT) ?? 5000,
+        timeout: Number(process.env.NEXT_PUBLIC_API_TIMEOUT) ?? 5000,
+        withCredentials:true
+        
       })
   }
 
@@ -36,3 +38,4 @@ export default class AxiosHttpService implements HttpSerive {
     return this.axiosInstance.delete(url)
   }
 }
+

@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 
 import { AppSidebar } from "@/components/SideBar";
 import Header from "@/components/Header";
+import { verifySession } from "@/actions/verify-session";
 
 
 export default async function RootLayout({
@@ -12,6 +13,10 @@ export default async function RootLayout({
 }>) {
   const cookieStore = await cookies()
   const defaultOpen = cookieStore.get("sidebar_state")?.value === "true"
+
+  await verifySession()
+
+  
 
   return (
     <SidebarProvider defaultOpen={defaultOpen}>
