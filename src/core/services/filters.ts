@@ -4,5 +4,5 @@ export enum Order {
 }
 
 export interface ServiceFilters {
-  order: Order;
+  order?: Order;
 }

@@ -2,41 +2,40 @@ import { AxiosError, AxiosInstance } from "axios";
 import { ServiceFilters } from "@/core/services/filters";
 import { axiosInstance } from "./axios/axios.service";
 import { ServiceError } from "./error/response.error";
-import { Course } from "@/domain/course/entity/course";
+import { Section } from "@/domain/section/entity/section";
 
-interface CreateCourseParams {
-  description: string;
-  title: string;
-  slug?: string;
+interface CreateSectionParams {
+  title: string
+  courseId: string
+  description: string
 }
-interface UpdateCourseParams {
-  description: string;
+interface UpdateSectionParams {
   title: string;
-  slug?: string;
+  description: string;
 }
-interface FetchManyCourseParams extends ServiceFilters {
+interface FetchManySectionParams extends ServiceFilters {
   title?: string;
   page?: number;
 }
 
-interface FetchManyCourseResponse  {
-  courses: Course[]
+interface FetchManySectionResponse  {
+  sections: Section[]
 }
 
-export class CourseService {
+export class SectionService {
   private http: AxiosInstance  
   constructor(){
     this.http = axiosInstance
   }
 
-  async create({description,title,slug}:CreateCourseParams){
+  async create({courseId,description,title}:CreateSectionParams){
     try {
       const response = await this.http.post
-      ('/course',
+      ('/section',
         { 
+          courseId,
           description,
-          title,
-          slug 
+          title
         }
       )
       return response
@@ -54,14 +53,13 @@ export class CourseService {
       })
     }
   }
-  async update({description,title,slug}:UpdateCourseParams){
+  async update({description,title}:UpdateSectionParams){
     try {
       const response = await this.http.put
-      ('/courses',
+      ('/sections',
         { 
           description,
           title,
-          slug 
         }
       )
       return response
@@ -79,9 +77,9 @@ export class CourseService {
       })
     }
   }
-  async delete(courseId:string){
+  async delete(sectionId:string){
     try {
-      const response = await this.http.delete(`/courses/${courseId}`)
+      const response = await this.http.delete(`/sections/${sectionId}`)
       return response
     } catch (error) {
             if(error instanceof AxiosError){
@@ -97,9 +95,9 @@ export class CourseService {
       })
     }
   }
-  async fetchMany({order,page,title}:FetchManyCourseParams){
+  async fetchMany({order,page,title}:FetchManySectionParams){
     try {
-      const response = await this.http.get<FetchManyCourseResponse>(`/course/`,{ 
+      const response = await this.http.get<FetchManySectionResponse>(`/section/`,{ 
         params:{order,page,title}
       })
       return response
@@ -119,4 +117,4 @@ export class CourseService {
   }
 }
 
-export const courseService = new CourseService()
+export const sectionService = new SectionService()

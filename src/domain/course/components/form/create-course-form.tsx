@@ -16,6 +16,10 @@ import { useEffect } from "react"
 import { slugify } from "@/utils/slugify";
 import { Textarea } from "@/components/ui/textarea";
 import { FormBase } from "@/components/form/FormBase";
+import { useMutation } from "@tanstack/react-query";
+import { courseService } from "@/services/course.service";
+import { createSuccessToast } from "@/lib/create-success-toast";
+import { createErrorToast } from "@/lib/create-error-toast";
 
 const schema = z.object({
   title: z.string().min(8, 'O titulo não pode ter menos de 8 letras'),
@@ -74,20 +78,46 @@ const renderFields = ({ form }: { form: UseFormReturn<z.infer<typeof schema>> })
 );
 
 export function CreateCourseForm() {
-
-  const handleSubmit = (values: z.infer<typeof schema>) => {
-    console.log("Form Submitted:", values);
-  };
-  const defaultValues = {
+  const defaultValues: z.infer<typeof schema> = {
     title:'',
     description: '',
-    slug:''
+    slug: ''
   }
-
   const form = useForm({
     resolver: zodResolver(schema),
     defaultValues,
   });
+
+  const createCourseMutation = useMutation({
+    mutationFn: async (values: z.infer<typeof schema>) => {
+      await courseService.create({
+        title: values.title,
+        slug: values.slug,
+        description: values.description
+      })
+    },
+    onSuccess:() => {
+      form.reset()
+      createSuccessToast({
+        title: 'Curso criado com sucesso!',
+      })
+    },
+    onError:(err) =>{
+      createErrorToast({
+        title: err.message,
+      })
+    },
+  })
+
+
+
+  const handleSubmit = (values: z.infer<typeof schema>) => {
+    console.log("Form Submitted:", values);
+    createCourseMutation.mutate(values)
+  };
+
+
+
   const title = form.watch("title");
 
   useEffect(()=>{
@@ -104,6 +134,7 @@ export function CreateCourseForm() {
           fields={renderFields}
           onSubmit={handleSubmit}
           buttonText="Create"
+          isSubmiting={createCourseMutation.isPending}
         />
       </div>
   )

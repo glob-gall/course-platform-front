@@ -7,6 +7,7 @@ import { ReactNode } from "react"
 // import { toast } from "@/components/hooks/use-toast"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
+import { Loader2 } from "lucide-react"
 
 interface FormProps<T extends z.ZodTypeAny> {
   title?: string;
@@ -19,9 +20,11 @@ interface FormProps<T extends z.ZodTypeAny> {
   onSubmit: (values: z.infer<T>) => void;
   submitSection?: ReactNode
   id?:string
+
+  isSubmiting?:boolean
 }
 
-export function FormBase<T extends z.ZodTypeAny>({ id,form, fields, onSubmit,submitSection,subtitle,title,buttonText }: FormProps<T>) {
+export function FormBase<T extends z.ZodTypeAny>({ id,form, fields, onSubmit,submitSection,isSubmiting,subtitle,title,buttonText }: FormProps<T>) {
 
 
   function onSubmitWrapper(data: z.infer<T>) {
@@ -50,7 +53,10 @@ export function FormBase<T extends z.ZodTypeAny>({ id,form, fields, onSubmit,sub
               {submitSection}
             </div>
 
-            <Button type="submit" form={id}>
+            <Button type="submit" form={id} disabled={isSubmiting}>
+              {isSubmiting && (
+                <Loader2 className="animate-spin" />
+              )}
               {buttonText ?? 'Enviar'}
             </Button>
           </div>
