@@ -1,4 +1,3 @@
-import { left, right } from "@/core/types/either";
 import { HttpService } from "./http.service";
 import { ServiceFilters } from "@/core/services/filters";
 
@@ -30,9 +29,9 @@ export class CourseService {
           slug 
         }
       )
-      return right(response.data)
+      return response
     } catch (error) {
-      return left(error)
+      return error
     }
   }
   async update({description,title,slug}:UpdateCourseParams){
@@ -45,17 +44,17 @@ export class CourseService {
           slug 
         }
       )
-      return right(response.data)
+      return response
     } catch (error) {
-      return left(error)
+      return error
     }
   }
   async delete(courseId:string){
     try {
       const response = await this.http.delete(`/courses/${courseId}`)
-      return right(response.data)
+      return response
     } catch (error) {
-      return left(error)
+      return error
     }
   }
   async fetchMany({order,page,title}:FetchManyCourseParams){
@@ -63,9 +62,9 @@ export class CourseService {
       const response = await this.http.get(`/courses/`,{ 
         params:{order,page,title}
       })
-      return right(response.data)
+      return response
     } catch (error) {
-      return left(error)
+      return error
     }
   }
 }

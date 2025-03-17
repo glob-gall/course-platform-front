@@ -77,9 +77,9 @@ export function LoginForm() {
         description:'Login realizado com sucesso!'
       })
     },
-    onError:() =>{
+    onError:(err) =>{
       createErrorToast({
-        title:"Error creating a user.",
+        title: err.message,
       })
     },
   })

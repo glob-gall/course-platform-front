@@ -17,6 +17,9 @@ import { FormBase } from "@/components/form/FormBase"
 import { Button } from "@/components/ui/button"
 import { useMutation } from "@tanstack/react-query"
 import { makeUserService } from "@/services/user.service"
+import { useRouter } from "next/navigation"
+import { createSuccessToast } from "@/lib/create-success-toast"
+import { createErrorToast } from "@/lib/create-error-toast"
 
 const schema = z.object({
   name: z.string().nonempty("Campo Obrigatório"),
@@ -72,12 +75,26 @@ const renderFields = ({ form }: { form: UseFormReturn<z.infer<typeof schema>> })
 );
 
 export function RegisterForm() {
+  const route = useRouter()
   
   
   const createUserMutation = useMutation({
     mutationFn: async (values: z.infer<typeof schema>) => {
       const userService = makeUserService()
       await userService.create(values)
+    },
+    onSuccess:() => {
+      route.push('/login')
+      createSuccessToast({
+        title: 'Faça login',
+        description:'Usuário registrado com sucesso'
+      })
+    },
+    onError: (err) => {
+      createErrorToast({
+        title:'Erro',
+        description: err.message
+      })
     }
   })
   const handleSubmit = (values: z.infer<typeof schema>) => {

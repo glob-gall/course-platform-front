@@ -1,6 +1,6 @@
-import { left, right } from "@/core/types/either";
-import { HttpService } from "./http.service";
-import { AxiosHttpService } from "./axios/axios.service";
+import { AxiosError, AxiosInstance } from "axios"
+import { axiosInstance } from "./axios/axios.service"
+import { ServiceError } from "./error/response.error"
 
 interface CreateUserParams {
   name: string
@@ -8,22 +8,35 @@ interface CreateUserParams {
   password: string
 }
 
+
 export class UserService {
-  constructor(private http: HttpService){}
+  private http: AxiosInstance 
+  constructor(){
+    this.http = axiosInstance
+  }
 
   async create({email,password, name}:CreateUserParams){    
     try {
       const response = await this.http.post('/user',{ name, email, password })
       
-      return right(response)
+      return response
     } catch (error) {
-      return left(error)
+      if(error instanceof AxiosError){
+        throw new ServiceError({
+          code: error.status ?? 500,
+          message: error.response?.data?.message 
+          ?? 'Oops! um erro inesperado aconteceu, por favor entre em contato com a nossa equipe'
+        })
+      }
+      throw new ServiceError({
+        code: 500,
+        message: 'Oops! um erro inesperado aconteceu, por favor entre em contato com a nossa equipe'
+      })
+      
     }
   }
 }
 
 export function makeUserService(){
-  const axiosService = new AxiosHttpService()
-  const userService = new UserService(axiosService)
-  return userService
+  return new UserService()
 }
