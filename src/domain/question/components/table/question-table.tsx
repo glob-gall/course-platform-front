@@ -1,16 +1,14 @@
 // import { Payment, columns } from "./columns"
 import { DataTable } from "@/components/table/base-table"
 import { Question } from "../../entity/question"
-import { generateQuestionMockData } from "./MOCK-DATA"
 import { questionColumns } from "./question-columns"
 
-async function getData(): Promise<Question[]> {
-  // Fetch data from your API here.
-  return generateQuestionMockData(25)
+
+interface QuestionTableProps {
+  data:Question[]
 }
 
-export async function QuestionTable() {
-  const data = await getData()
+export function QuestionTable({data}:QuestionTableProps) {
 
   return (
     <div className="container mx-auto">
