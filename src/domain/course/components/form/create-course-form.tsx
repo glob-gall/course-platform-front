@@ -20,6 +20,8 @@ import { useMutation } from "@tanstack/react-query";
 import { courseService } from "@/services/course.service";
 import { createSuccessToast } from "@/lib/create-success-toast";
 import { createErrorToast } from "@/lib/create-error-toast";
+import { Course } from "../../entity/course";
+import { UniqueEntityID } from "@/utils/randomUUID";
 
 const schema = z.object({
   title: z.string().min(8, 'O titulo não pode ter menos de 8 letras'),
@@ -77,7 +79,10 @@ const renderFields = ({ form }: { form: UseFormReturn<z.infer<typeof schema>> })
   </>
 );
 
-export function CreateCourseForm() {
+export interface CreateCourseFormProps {
+  submit?: (course: Course) => void
+}
+export function CreateCourseForm({submit}:CreateCourseFormProps) {
   const defaultValues: z.infer<typeof schema> = {
     title:'',
     description: '',
@@ -87,6 +92,8 @@ export function CreateCourseForm() {
     resolver: zodResolver(schema),
     defaultValues,
   });
+
+
 
   const createCourseMutation = useMutation({
     mutationFn: async (values: z.infer<typeof schema>) => {
@@ -110,11 +117,22 @@ export function CreateCourseForm() {
   })
 
 
-
-  const handleSubmit = (values: z.infer<typeof schema>) => {
+const handleSubmit = (values: z.infer<typeof schema>) => {
     console.log("Form Submitted:", values);
+    if(submit) {
+      submit({
+        id: UniqueEntityID(),
+        createdAt: '',
+        updatedAt:'',
+        description: values.description,
+        slug: values.slug,
+        title: values.title,
+      })
+      return
+    };
     createCourseMutation.mutate(values)
-  };
+    }
+  
 
 
 

@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/popover"
 
 
-type SearchItem = {
+export type SearchItem = {
   value: string,
   label: string
 }
@@ -52,16 +52,16 @@ export function SearchInput({placeholder,items, notFoundMsg, fieldValue,formSetV
       </PopoverTrigger>
       <PopoverContent className="w-[300px] p-0">
         <Command>
-          <CommandInput placeholder="Search framework..." />
+          <CommandInput placeholder="Search..." />
           <CommandList>
             <CommandEmpty>{notFoundMsg}</CommandEmpty>
             <CommandGroup>
               {items.map((item) => (
                 <CommandItem
-                  key={item.value}
-                  value={item.value}
+                  key={item.label}
+                  value={item.label}
                   onSelect={(currentValue) => {
-                    formSetValue(currentValue === fieldValue ? "" : currentValue)
+                    formSetValue(currentValue === fieldValue ? "" : item.value)
                     setOpen(false)
                   }}
                 >

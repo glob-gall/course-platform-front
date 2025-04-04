@@ -1,4 +1,4 @@
-import {  Home, NotepadText, Settings, GraduationCap, UserRound, FolderOpen, SquareCheckBig, Apple } from "lucide-react"
+import {  Home, NotepadText, Settings, GraduationCap, UserRound, FolderOpen, SquareCheckBig, Apple, ShoppingBag } from "lucide-react"
 
 import {
   Sidebar,
@@ -30,6 +30,11 @@ const items = [
     title: "Cursos",
     url: "/courses",
     icon: GraduationCap,
+  },
+  {
+    title: "Produtos",
+    url: "/products",
+    icon: ShoppingBag,
   },
   {
     title: "Módulos",
