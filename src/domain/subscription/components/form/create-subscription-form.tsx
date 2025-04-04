@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { FormBase } from "@/components/form/FormBase";
 import { Textarea } from "@/components/ui/textarea";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { productService } from "@/services/product.service";
+import { subscriptionService } from "@/services/subscription.service";
 import { createSuccessToast } from "@/lib/create-success-toast";
 import { createErrorToast } from "@/lib/create-error-toast";
 import { useCallback, useState } from "react";
@@ -28,19 +28,25 @@ import { SelectCourseFormDialog } from "@/domain/course/components/form/select-c
 import { courseService } from "@/services/course.service";
 import { Skeleton } from "@/components/ui/skeleton";
 import { CurrencyInput } from "@/components/form/CurrencyInput";
-import { DatePicker } from "@/components/form/DatePicker";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 
 const schema = z.object({
-  title: z.string().min(8, 'O titulo não pode ter menos de 8 letras'),
+  cycle: z.enum([
+    'WEEKLY',
+    'BIWEEKLY',
+    'MONTHLY',
+    'QUARTERLY',
+    'SEMIANNUALLY',
+    'YEARLY',
+  ]),
+  priceInCents: z.coerce.number(),
+  title: z.string(),
   description: z.string().optional(),
-  priceInCents: z.number(),
-  promoPriceInCents:  z.number(),
-  maxDatePromoPrice: z.date().optional(),
 })
 
 
-export function CreateProductForm() {
+export function CreateSubscriptionForm() {
 
   const [allCourses,setAllCourses] = useState<Course[]>([])
   const [selectedCourses,setSelectedCourses] = useState<Course[]>([])
@@ -112,9 +118,52 @@ export function CreateProductForm() {
 
 
 const renderFields = ({ form }: { form: UseFormReturn<z.infer<typeof schema>> }) => {
-  
+
   return (
       <>
+      <div className="flex flex-row gap-2 not-sm:flex-wrap">
+        <FormField
+          control={form.control}
+          name="cycle"
+          render={({ field }) => (
+            <FormItem className="">
+              <FormLabel>Tipo</FormLabel>
+                <Select  onValueChange={field.onChange} defaultValue={field.value}>
+              <FormControl>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Theme" />
+                  </SelectTrigger>
+              </FormControl>
+                  <SelectContent>
+                    <SelectItem value="WEEKLY">semanal</SelectItem>
+                    <SelectItem value="BIWEEKLY">Quinzenal</SelectItem>
+                    <SelectItem value="MONTHLY">Mensal</SelectItem>
+                    <SelectItem value="QUARTERLY">Trimestral</SelectItem>
+                    <SelectItem value="SEMIANNUALLY">Bimestral</SelectItem>
+                    <SelectItem value="YEARLY">Anual</SelectItem>
+                  </SelectContent>
+                </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="priceInCents"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Preço (R$)</FormLabel>
+              <FormControl>
+
+                <CurrencyInput placeholder="00.00" {...field}/>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
+
+
         <FormField
           control={form.control}
           name="title"
@@ -122,7 +171,7 @@ const renderFields = ({ form }: { form: UseFormReturn<z.infer<typeof schema>> })
             <FormItem className="w-full">
               <FormLabel>Titulo</FormLabel>
               <FormControl>
-                <Input placeholder="Titulo do módulo" {...field} />
+                <Input placeholder="nome do plano" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -143,70 +192,18 @@ const renderFields = ({ form }: { form: UseFormReturn<z.infer<typeof schema>> })
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="priceInCents"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Preço (R$)</FormLabel>
-              <FormControl>
 
-                <CurrencyInput placeholder="00.00" {...field}/>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <div className="flex flex-row gap-2 not-sm:flex-wrap">
-          <FormField
-            control={form.control}
-            name="promoPriceInCents"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Preço Promocional</FormLabel>
-                <FormControl>
-
-                  <CurrencyInput placeholder="00.00" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="maxDatePromoPrice"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Data limite da Promoção</FormLabel>
-                <FormControl>
-
-                  <DatePicker onChange={field.onChange} value={field.value} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
       </>
     )
   };
 
   const createSectionMutation = useMutation({
     mutationFn: async ({
-      maxDatePromoPrice,
-      priceInCents,
-      promoPriceInCents,
-      title,
-      description
+      cycle,priceInCents,title,description
     }: z.infer<typeof schema>) => {
-      await productService.create({
+      await subscriptionService.create({
         courses: selectedCourses.map(c => c.id),
-        priceInCents,
-        title,
-        description,
-        maxDatePromoPrice,
-        promoPriceInCents,
-
+        cycle,priceInCents,title,description
       })
     },
     onSuccess:() => {
@@ -230,9 +227,8 @@ const renderFields = ({ form }: { form: UseFormReturn<z.infer<typeof schema>> })
     
   };
   const defaultValues: z.infer<typeof schema> = {
-    maxDatePromoPrice: undefined,
+    cycle:'MONTHLY',
     priceInCents:0,
-    promoPriceInCents:0,
     title:'',
     description:''
 

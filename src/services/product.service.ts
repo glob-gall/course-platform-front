@@ -41,11 +41,29 @@ export class ProductService {
   }
 
   async fetchMany(){
-    return {
-      data:{
-        products:[]
+    try {
+      const response = await this.http.get('/product')
+      
+      return response
+    } catch (error) {
+      if(error instanceof AxiosError){
+        throw new ServiceError({
+          code: error.status ?? 500,
+          message: error.response?.data?.message 
+          ?? 'Oops! um erro inesperado aconteceu, por favor entre em contato com a nossa equipe'
+        })
       }
+      throw new ServiceError({
+        code: 500,
+        message: 'Oops! um erro inesperado aconteceu, por favor entre em contato com a nossa equipe'
+      })
+      
     }
+    // return {
+    //   data:{
+    //     products:[]
+    //   }
+    // }
   }
 }
 

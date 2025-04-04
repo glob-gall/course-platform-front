@@ -1,4 +1,4 @@
-import {  Home, NotepadText, Settings, GraduationCap, UserRound, FolderOpen, SquareCheckBig, Apple, ShoppingBag } from "lucide-react"
+import {  Home, NotepadText, Settings, GraduationCap, UserRound, FolderOpen, SquareCheckBig, Apple, ShoppingBag, Wallet } from "lucide-react"
 
 import {
   Sidebar,
@@ -22,6 +22,16 @@ const items = [
     icon: Home,
   },
   {
+    title: "Planos",
+    url: "/subscription",
+    icon: Wallet,
+  },
+  {
+    title: "Produtos",
+    url: "/products",
+    icon: ShoppingBag,
+  },
+  {
     title: "Usários",
     url: "users",
     icon: UserRound,
@@ -30,11 +40,6 @@ const items = [
     title: "Cursos",
     url: "/courses",
     icon: GraduationCap,
-  },
-  {
-    title: "Produtos",
-    url: "/products",
-    icon: ShoppingBag,
   },
   {
     title: "Módulos",

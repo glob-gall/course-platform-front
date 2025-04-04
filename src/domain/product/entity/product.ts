@@ -8,7 +8,7 @@ export type Product = {
   promoPriceInCents?: number | null;
   maxDatePromoPrice?: Date | null;
 
-  courses: Course[];
+  courses?: Course[];
 
   createdAt: Date;
   updatedAt?: Date | null;
